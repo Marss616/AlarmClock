@@ -21,12 +21,11 @@ def gettime():
     return f'{time_str}, {date_str}'
 
 def restart_program():
-    os.execv(sys.executable, ['python'] + sys.argv) # MV this function to backend.py
+    os.execv(sys.executable, ['python'] + sys.argv)
 
 def store_trigger_time():
     # Get the time to trigger from the user
-    trigger_time = input('Enter the time to trigger (HH:MM:SS): ')
-    
-    # Store the trigger time in a file
-    with open('trigger_time.txt', 'a') as file:
-        file.write(trigger_time)
+    file1 = open("myfile.txt", "w")
+    L = ["This is Delhi\n", "This is Paris\n", "This is London"]
+    file1.writelines(L)
+    file1.close()

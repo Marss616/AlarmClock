@@ -1,34 +1,38 @@
-# Contain GUI for the application
-
-from backend import *
-from tkinter import *
+import os
+import tkinter as tk
 from tkinter import ttk
+import time
 
+def store_trigger_time(trigger_time):
+    print(trigger_time)
+    print(type(trigger_time))
 
+def gettime():
+    """Return the current time in HH:MM format."""
+    return time.strftime('%H:%M')
 
-# Replace root.destroy with restart_program in the button's command
+def refresh_time():
+    """Refresh the displayed time."""
+    current_time_label.config(text=("The current time is: " + gettime()))
+    root.after(1000, refresh_time)
 
-
-gettime()
-
-root = Tk()
+root = tk.Tk()
 frm = ttk.Frame(root, padding=10)
 frm.grid()
-ttk.Label(frm, text="Time Trigger V.0.1").grid(column=0, row=0)
-ttk.Label(frm, text="The current time is:").grid(column=0, row=1)
-ttk.Label(frm, text="Time to Trigger: SS/MM/HH").grid(column=0, row=3)
 
-# collumn 0
+# Title and current time display
+ttk.Label(frm, text="Time Trigger Version 1.0").grid(column=0, row=0, columnspan=2)
+current_time_label = ttk.Label(frm, text="The current time is: " + gettime())
+current_time_label.grid(column=0, row=1)
 
-ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
-ttk.Label(frm, text=gettime()).grid(column=1, row=1)
-ttk.Entry(frm).grid(column=1, row=3)
-ttk.Button(frm, text="Update Current Time:", command=restart_program).grid(column=1, row=2)
-ttk.Button(frm, text="Submit Input", command=store_trigger_time).grid(column=1, row=4)
-# collumn 1
+# Time entry
+ttk.Label(frm, text="Set Time to Trigger, HH:MM").grid(column=0, row=2)
+entry_widget = ttk.Entry(frm)
+entry_widget.grid(column=1, row=2)
 
+# Buttons for operations
+ttk.Button(frm, text="Update Current Time", command=refresh_time).grid(column=0, row=3)
+ttk.Button(frm, text="Submit Input", command=lambda: store_trigger_time(entry_widget.get())).grid(column=0, row=4)
+ttk.Button(frm, text="Quit", command=root.destroy).grid(column=0, row=5)
 
-# Complete the front end for basic alarm clock with output of the time and date from the backend
 root.mainloop()
-
-
